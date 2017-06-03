@@ -7,7 +7,7 @@ def decoupe(soundfile: str, start: float, end: float, output=None) -> None:
     import sys
     import operator
 
-    commande = "sox {input} {output} trim {start} {duration}"
+    command = "sox {input} {output} trim {start} {duration}"
 
     if output is None:
         output = ".".join(["_".join([soundfile.rpartition('.')[0], str(start)]), "wav"])
@@ -19,9 +19,9 @@ def decoupe(soundfile: str, start: float, end: float, output=None) -> None:
         sep=" "
     )
 
-    x=subprocess.Popen(
+    x = subprocess.Popen(
         shlex.split(
-            commande.format(
+            command.format(
                 input=soundfile,
                 output=output,
                 start=str(start),
@@ -32,12 +32,11 @@ def decoupe(soundfile: str, start: float, end: float, output=None) -> None:
     x.communicate()
 
 
-
-def extraire(input: open, node: str, start="", end=""):
+def extraire(inputx: open, node: str, start="", end=""):
     import sys
     import bs4
 
-    soup = bs4.BeautifulSoup(input, 'lxml')
+    soup = bs4.BeautifulSoup(inputx, 'lxml')
 
     return map(
         lambda x: (
@@ -149,7 +148,7 @@ def main():
         temp = codecs.open(args.csvFile, 'r', 'utf-8').read().splitlines()
 
         for extraction in map(lambda x: x.split(args.separator), temp):
-                (name, id, start, end) = extraction
+                (name, _, start, end) = extraction
                 decoupe(
                     soundfile=args.input,
                     start=start,
@@ -181,7 +180,7 @@ def main():
 
     elif args.xmlFile is not None:
         temps = extraire(
-            input=codecs.open(args.xmlFile, 'r', 'latin-1'),
+            inputx=codecs.open(args.xmlFile, 'r', 'latin-1'),
             node="turn",
             start="starttime",
             end="endtime"
