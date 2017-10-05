@@ -1,0 +1,19 @@
+Metadata
+    id
+    version
+    encoding
+    doctype
+
+Tags
+    id
+    tag
+
+Features
+    id
+    attribut
+    valeur
+
+Tag_Feat
+    id
+    id_tag
+    id_features
